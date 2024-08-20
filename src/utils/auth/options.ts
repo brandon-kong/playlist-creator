@@ -1,9 +1,14 @@
 import { NextAuthOptions } from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 
 // Providers
 import SpotifyProvider from 'next-auth/providers/spotify';
+import { prisma } from '@/utils/db/prisma';
+import { Adapter } from 'next-auth/adapters';
 
 const handler: NextAuthOptions = {
+    adapter: PrismaAdapter(prisma) as Adapter,
+
     providers: [
         SpotifyProvider({
             clientId: process.env.SPOTIFY_CLIENT_ID as string,
